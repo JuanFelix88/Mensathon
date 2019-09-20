@@ -1,0 +1,92 @@
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(http://efatacomunicacao.com.br/juanx/background.svg) repeat,
+    linear-gradient(140deg, #890e4f, #025f64);
+}
+
+@keyframes animation-background {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 70% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.login-box {
+  width: 70%;
+  max-width: 700px;
+  min-width: 500px;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-img {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-img img {
+  width: 45%;
+  max-width: 430px;
+}
+
+.login-box form {
+  width: 45%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.link-forgoth-password {
+  color: #1596f3;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: -5px;
+  transition: all 0.25s ease-in-out;
+}
+
+.link-forgoth-password:hover {
+  color: #66bdfc;
+  text-decoration: none;
+}
+
+.register-login {
+  color: #cad9e4;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.license-container {
+  position: absolute;
+  left: 50vw;
+  top: 85vh;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #276da0;
+  font-size: 8pt;
+}
+
+.license-container > p {
+  margin: 3px;
+  font-weight: 500;
+}

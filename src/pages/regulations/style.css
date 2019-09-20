@@ -1,0 +1,128 @@
+.background-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px !important;
+  background: url(http://efatacomunicacao.com.br/juanx/background.svg) repeat,
+    linear-gradient(140deg, #890e4f, #025f64);
+}
+
+@keyframes animation-background {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 70% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes show-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.box-container {
+  max-width: 1200px;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 90vh;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 10px 0;
+  box-shadow: 6px 5px 12px #00000036;
+  animation: show-pop 200ms ease-in-out;
+}
+
+.title-container {
+  color: #3f0323;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  padding: 5px 10px;
+}
+
+.title-container > h3 {
+  padding: 5px 10px;
+  font-size: 24pt;
+  width: 75%;
+  margin-top: 5px;
+  height: auto;
+  /* border-bottom: solid rgb(66, 49, 58) */
+  animation: show-info 250ms ease-in-out;
+}
+
+@media only screen and (max-width: 600px) {
+  .box-container {
+    max-width: none;
+    max-height: none;
+    width: 95vw;
+    height: 90vh;
+    border-radius: 20px;
+    animation: show-pop 200ms ease-in-out;
+  }
+  .title-container > h3 {
+    font-size: 18pt;
+  }
+}
+
+.event-info {
+  height: 78%;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  overflow-y: auto;
+  padding: 10px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+}
+
+@keyframes show-info {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.info-map {
+  color: #3f0323;
+}
+
+.info-map :nth-child(1) {
+  color: #3f0323;
+  font-weight: 500;
+  animation: show-info 250ms ease-in-out;
+}
+
+.info-map :nth-child(2) {
+  color: #4b2338;
+  animation: show-info 250ms ease-in-out;
+}
+
+.buttons-container-info-event {
+  margin: auto 0;
+  height: auto;
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.buttons-container-info-event > button {
+  margin: auto 5px;
+}
