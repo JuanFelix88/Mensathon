@@ -19,6 +19,7 @@ export default () => {
   const [tokenValid, setTokenvalid] = useState(false)
   
   useEffect(() => {
+    document.title = "Mensathon - Login"
     if (localStorage.getItem('app_token') === 'hukjkhkopop57954ww23s') {
       setTokenvalid(true)
       window.location.href = "http://localhost:3000/main"

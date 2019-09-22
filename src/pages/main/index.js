@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './style.css'
 import CardUser from './carduser'
 import CardMore from './cardmore'
@@ -60,12 +60,7 @@ export default () => {
   function handleInterationOffFocusSearcher () {
     setSearchFocus(false)
   }
-
-  // function resolveURlGet (text) {
-  //   return `https://clients1.google.com/complete/search?q=${text}&` +
-  //   `client=translate-onebox&ds=translate&hl=en&requiredfields=tl%3Apt&callback=_callbacks____2k0qthv3p`
-  // }
-
+  
   function handleGetKeyPressEvent (e) {
     if (e.which === 13 && e.ctrlKey) handleSendMsg()
   }
@@ -85,8 +80,6 @@ export default () => {
     // console.log(`${e.target.offsetHeight / ((e.target.offsetHeight - e.target.scrollTop) / 100)}%`)
   }
 
-  // // document.getElementById('').offsetHeight
-
   async function refreshSuggestions (textInput) {
     const regularExpression = textInput !== ''
       ? new RegExp(textInput.replace(/[\[\/\.\\()$^*+-]/g, ''), 'ig')
@@ -96,11 +89,15 @@ export default () => {
     }))
   }
 
+  useEffect(() => {
+    document.title = "Team - Mensathon"
+  })
+
   return (
     <div className="container-manager-user">
       <header>
         {/* <img src={logo}/> */}
-        <h1 className="team-name">{process.env.TEST_APP}</h1>
+        <h1 className="team-name">Mensathon</h1>
         <div className="searcher-control">
           <input type="text" 
           value={search}
