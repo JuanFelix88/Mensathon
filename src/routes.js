@@ -5,7 +5,7 @@ import Login from './pages/login'
 import EventInfo from './pages/regulations'
 import Main from './pages/main'
 import User from './pages/user'
-import FindPeople from './pages/findpeople'
+// import FindPeople from './pages/findpeople'
 
 const Routes = () => (
   <BrowserRouter>
@@ -14,7 +14,7 @@ const Routes = () => (
       <Route path="/regulations" exact={true} component={EventInfo}/>
       <Route path="/main" exact={true} component={Main}/>
       <Route path="/user/:id" exact={true} component={User}/>
-      <Route path="/findpeople" exact={true} component={FindPeople}/>
+      {/* <Route path="/findpeople" exact={true} component={FindPeople}/> */}
       {/* findpeople */}
       <Route path="*" component={Login}/>
     </Switch>

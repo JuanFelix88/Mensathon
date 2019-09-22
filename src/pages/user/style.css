@@ -1,12 +1,195 @@
-.background-container-user {
+body {
+  padding: 0px 0px;
+  margin: 0 0;
+}
+
+.background-container {
   display: flex;
   width: 100vw;
   height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px 20px !important;
   background: url(http://efatacomunicacao.com.br/juanx/background.svg) repeat,
     linear-gradient(140deg, #890e4f, #025f64);
   color: #d4f4f5c7;
+}
+
+@keyframes animation-background {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 70% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes show-element {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.box-menu-main {
+  padding-top: 50px;
+  width: 500px;
+  height: 600px;
+  display: flex;
+  /* background-color: #d3d3d3; */
+  /* background-color: #d3d3d3; */
+  flex-direction: column;
+  border-radius: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* font-family: "MV Boli Regular"; */
+  animation: show-element 350ms ease-in-out;
+}
+
+.container-img {
+  display: flex;
+  width: 100%;
+  height: 170px;
+  justify-content: center;
+  padding-top: 25px;
+}
+.img-circle-1 {
+  background: linear-gradient(140deg, #f0c85d, #c17fbf);
+  overflow: hidden;
+  width: 145px;
+  height: 145px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 2px 2px 14px 8px #00000049;
+}
+
+.img-circle {
+  overflow: hidden;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  /* margin-top: 50px; */
+  animation: show-element 350ms ease-in-out;
+}
+
+.img-circle > img {
+  width: 140px;
+  height: 140px;
+}
+
+.img-circle > span {
+  width: 140px;
+  height: 140px;
+  animation: show-element 350ms ease-in-out;
+}
+
+.title {
+  margin-top: 5px;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: show-element 350ms ease-in-out;
+}
+
+.business-title {
+  width: 100%;
+  width: 100%;
+  display: flex;
+  margin-left: -12px;
+  margin-top: -5px;
+  justify-content: center;
+  animation: show-element 350ms ease-in-out;
+}
+
+.business-title > img {
+  margin-top: -2px;
+  width: 32px;
+  height: 37px;
+}
+
+.business-title > span {
+  font-size: 20;
+  font-weight: 400;
+  animation: show-element 350ms ease-in-out;
+}
+
+.title > h2 {
+  text-align: center;
+  animation: show-element 350ms ease-in-out;
+}
+
+.title > h4 {
+  text-align: center;
+  animation: show-element 350ms ease-in-out;
+}
+
+.title > h5 {
+  text-align: center;
+  animation: show-element 350ms ease-in-out;
+}
+
+.container-buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5px;
+  outline: 0;
+}
+
+.button-jailson {
+  border: 2px solid #fff;
+  background: none;
+  border-radius: 30px;
+  margin: 5px 0;
+  width: 160px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  outline: 0;
+  transition: background 200ms ease-in-out;
+  animation: show-element 350ms ease-in-out;
+}
+
+.button-jailson:hover {
+  background: #ffffff85;
+  outline: none;
+}
+
+.button-jailson:focus {
+  outline: 0;
+}
+
+#regulations {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#regulations > a {
+  color: #fff;
+  font-size: 14pt;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 350ms ease-in-out;
+  animation: show-element 350ms ease-in-out;
+}
+
+#regulations > a:hover {
+  color: #b6b6b6;
+  text-decoration: none;
 }
