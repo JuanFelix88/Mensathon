@@ -116,7 +116,7 @@ export default () => {
                       <div className="suggestion-text-loading">
                         <span>Unfortunately, nothing can be found</span>
                       </div>
-                  </>
+                    </>
             }
           </div>
         </div>
