@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-
+import PageNotFound from './pages/404'
 import Login from './pages/login'
 import EventInfo from './pages/regulations'
 import Main from './pages/main'
@@ -16,7 +16,7 @@ const Routes = () => (
       <Route path="/user/:id" exact={true} component={User}/>
       {/* <Route path="/findpeople" exact={true} component={FindPeople}/> */}
       {/* findpeople */}
-      <Route path="*" component={Login}/>
+      <Route path="*" component={PageNotFound}/>
     </Switch>
   </BrowserRouter>
 )

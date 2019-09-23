@@ -23,7 +23,7 @@ export default (props) => {
     if (localStorage.getItem('app_token') === 'hukjkhkopop57954ww23s') {
       setTokenvalid(true)
       // props.history.push
-      window.location.href = `${process.env.REACT_APP_NAME}/main`
+      window.location.href = `/main`
     }
   }, [])
 
