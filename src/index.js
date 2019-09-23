@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import 'src/styles/bootstrap-grid.css'
-import 'src/styles/bootstrap-reboot.css'
-import 'src/styles/bootstrap.css'
+import './styles/bootstrap-grid.css';
+import './styles/bootstrap-reboot.css';
+import './styles/bootstrap.css';
 import Routes from './routes'
 
 ReactDOM.render(<Routes />, document.getElementById('root'));

@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom'
 
 const noReferenceURL = ("#")
 
-export default () => {
+export default (props) => {
   // email input
   const [email, setEmail] = useState('')
 
@@ -22,7 +22,8 @@ export default () => {
     document.title = "Mensathon - Login"
     if (localStorage.getItem('app_token') === 'hukjkhkopop57954ww23s') {
       setTokenvalid(true)
-      window.location.href = "http://localhost:3000/main"
+      // props.history.push
+      window.location.href = `${process.env.REACT_APP_NAME}/main`
     }
   }, [])
 
