@@ -3,10 +3,9 @@ import './style.css'
 import CardUser from './carduser'
 import CardMore from './cardmore'
 import CardTeam from './cardteam'
-// import logo from '../../assets/short-logo.svg'
 import Suggestion from './suggestion'
-// import axios from 'axios'
 import CardMSG from './cardmsg'
+import { validateToken } from '../../api'
 
 const searchsCommons = [
   "Connect Users",
@@ -89,9 +88,19 @@ export default () => {
     }))
   }
 
+  async function validateSession () {
+    try {
+      const response = await validateToken(localStorage.getItem('app_token'))
+      if (response.status !== 200) window.location.href = `/login`
+    } catch (error) {
+      window.location.href = `/login`
+    }
+  }
+
   useEffect(() => {
+    validateSession()
     document.title = "Team - Mensathon"
-  })
+  }, [])
 
   return (
     <div className="container-manager-user">

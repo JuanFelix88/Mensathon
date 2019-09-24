@@ -2,6 +2,7 @@ import React, { useEffect, useState  } from 'react'
 import './style.css'
 import logo from '../../assets/logo.svg'
 import {Redirect} from 'react-router-dom'
+import { login } from '../../api'
 
 const noReferenceURL = ("#")
 
@@ -35,8 +36,13 @@ export default (props) => {
     setPassword(target.value)
   }
 
-  function handleDoneLogin () {
-    localStorage.setItem('app_token', 'hukjkhkopop57954ww23s')
+  async function handleDoneLogin (e) {
+    e.preventDefault()
+    const response = await login(email, password)
+    if (response.status === 400) return
+    const { token } = response.data
+    // console.log(response)
+    localStorage.setItem('app_token', token)
     setLoggedIn(true)
   }
 
