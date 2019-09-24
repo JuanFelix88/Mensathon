@@ -5,7 +5,7 @@ import CardMore from './cardmore'
 import CardTeam from './cardteam'
 import Suggestion from './suggestion'
 import CardMSG from './cardmsg'
-import { validateToken } from '../../api'
+import { validateToken, getAvailableUsers } from '../../api'
 
 const searchsCommons = [
   "Connect Users",
@@ -31,6 +31,11 @@ export default () => {
 
   // scroll chat
   const [scrollAmount, setScrollAmount] = useState(0)
+
+  // users available
+  const [availableUsers, setAvailableUsers] = useState([])
+
+  const [loadingPage, setLoadingPage] = useState(true)
 
   function handleChangeMsg ({target}) {
     setInputMsg(target.value)
@@ -90,145 +95,161 @@ export default () => {
 
   async function validateSession () {
     try {
-      const response = await validateToken(localStorage.getItem('app_token'))
-      if (response.status !== 200) window.location.href = `/login`
+      const response = await validateToken()
+      if (response.status !== 200) return window.location.href = `/login`
+      setLoadingPage(false)
     } catch (error) {
       window.location.href = `/login`
     }
   }
 
+  async function handleGetAvailableUsers () {
+    const { data } = await getAvailableUsers()
+    setAvailableUsers(data)
+  }
+
   useEffect(() => {
     validateSession()
+    handleGetAvailableUsers()
     document.title = "Team - Mensathon"
   }, [])
 
   return (
     <div className="container-manager-user">
-      <header>
-        {/* <img src={logo}/> */}
-        <h1 className="team-name">Mensathon</h1>
-        <div className="searcher-control">
-          <input type="text" 
-          value={search}
-          placeholder="Press enter to search..." 
-          className="searcher-app"
-          onChange={handleInterationOnFocusSearcher}
-          onBlur={handleInterationOffFocusSearcher}
-          />
-          <div className={`searcher-suggestion${!searchFocus ? '-disabled' : ''}`}>
-            {
-              !searchFocus 
-                ? null /* none items */
-                : suggestions.length !== 0 /* request suggestions */
-                  ? suggestions.map(text => <Suggestion text={text} func={() => handleChangeSearcherText(text)}/>)
-                  : <>
-                      <div className="suggestion-text-loading">
-                        <span>Unfortunately, nothing can be found</span>
-                      </div>
-                    </>
-            }
-          </div>
-        </div>
-      </header>
-      <div className="container-layout-down">
-        <div className="menu-left">
-          <div className="container-avatar">
-            <div className="container-img">
-              <div className="img-circle-1">
-                <div className="img-circle">
-                  <img src="https://avatars2.githubusercontent.com/u/49664855?s=460&v=4"/>
+      { loadingPage ? <h4 style={{color: 'white', margin: 'auto auto'}}>Loading...</h4>
+        : <>
+          <header>
+            {/* <img src={logo}/> */}
+            <h1 className="team-name">Mensathon</h1>
+            <div className="searcher-control">
+              <input type="text" 
+              value={search}
+              placeholder="Press enter to search..." 
+              className="searcher-app"
+              onChange={handleInterationOnFocusSearcher}
+              onBlur={handleInterationOffFocusSearcher}
+              />
+              <div className={`searcher-suggestion${!searchFocus ? '-disabled' : ''}`}>
+                {
+                  !searchFocus 
+                    ? null /* none items */
+                    : suggestions.length !== 0 /* request suggestions */
+                      ? suggestions.map(text => <Suggestion text={text} func={() => handleChangeSearcherText(text)}/>)
+                      : <>
+                          <div className="suggestion-text-loading">
+                            <span>Unfortunately, nothing can be found</span>
+                          </div>
+                        </>
+                }
+              </div>
+            </div>
+        </header>
+        <div className="container-layout-down">
+          <div className="menu-left">
+            <div className="container-avatar">
+              <div className="container-img">
+                <div className="img-circle-1">
+                  <div className="img-circle">
+                    <img src="https://avatars2.githubusercontent.com/u/49664855?s=460&v=4"/>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="container-dev-info">
-            <span>Juan Felix</span>
-            <span>Front-end</span>
-          </div>
-          <button className="button-jailson" style={{margin: '10px auto', minHeight: 40}}>
-            <h5>Invite</h5>
-          </button>
-          <div className="container-team">
-            <span>Team</span>
-          </div>
-          <div className="container-users">
-            <CardUser name="Jailson" role="Product Owner" leader={true}/>
-            <CardUser name="Victor" role="Front-end"/>
-            <CardUser name="Cosme" role="Front-end"/>
-            <CardUser name="Luis" role="DevOps"/>
-          </div>
-        </div>
-        <div className="container-workspace">
-          <div className="container-chat" onScroll={handleOnScrollChat}>
-            <div className="container-msg" id="chat-msg">
-              {
-                msg
-                  .map(({userName, msg}) => {
-                    return <CardMSG userName={userName} msg={msg}/>
-                  })
-              }
+            <div className="container-dev-info">
+              <span>Juan Felix</span>
+              <span>Front-end</span>
             </div>
-            <footer className="container-input-msg">
-              <div>
-                <textarea onKeyPress={handleGetKeyPressEvent} placeholder="Type some thing..." value={inputMsg} onChange={handleChangeMsg}>
-                </textarea>
+            <button className="button-jailson" style={{margin: '10px auto', minHeight: 40}}>
+              <h5>Invite</h5>
+            </button>
+            <div className="container-team">
+              <span>Team</span>
+            </div>
+            <div className="container-users">
+              <CardUser name="Jailson" role="Product Owner" leader={true}/>
+              <CardUser name="Victor" role="Front-end"/>
+              <CardUser name="Cosme" role="Front-end"/>
+              <CardUser name="Luis" role="DevOps"/>
+            </div>
+          </div>
+          <div className="container-workspace">
+            <div className="container-chat" onScroll={handleOnScrollChat}>
+              <div className="container-msg" id="chat-msg">
+                {
+                  msg
+                    .map(({userName, msg}) => {
+                      return <CardMSG userName={userName} msg={msg}/>
+                    })
+                }
+              </div>
+              <footer className="container-input-msg">
                 <div>
-                  <button onClick={handleSendMsg}>Send</button>
+                  <textarea onKeyPress={handleGetKeyPressEvent} placeholder="Type some thing..." value={inputMsg} onChange={handleChangeMsg}>
+                  </textarea>
+                  <div>
+                    <button onClick={handleSendMsg}>Send</button>
+                  </div>
                 </div>
-              </div>
-            </footer>
+              </footer>
+            </div>
+          </div>
+          <div className="menu-right">
+            <div className="menu-left-title">
+              <span>Users available</span>
+            </div>
+            <div className="container-users" style={{maxHeight: 270}}>
+              {
+                availableUsers.map(({ nickName, job }) => (
+                  <CardUser name={nickName} role={job}/>
+                ))
+              }
+              {/* <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Ana" role="Front-end"/>
+              <CardUser name="Jéssica" role="Business"/>
+              <CardUser name="Luis" role="DevOps"/>
+              <CardUser name="Luis" role="DevOps"/> */}
+              <CardMore/>
+            </div>
+            <div className="menu-left-title">
+              <span>Others teams</span>
+            </div>
+            <div className="container-teams" style={{maxHeight: 270}}>
+              <CardTeam name="Knife Party"/>
+              <CardTeam name="Souls"/>
+              <CardTeam name="Willians"/>
+              <CardTeam name="Frontens"/>
+              <CardTeam name="Knife Party"/>
+              <CardTeam name="Souls"/>
+              <CardTeam name="Willians"/>
+              <CardTeam name="Frontens"/>
+              <CardTeam name="Knife Party"/>
+              <CardTeam name="Souls"/>
+              <CardTeam name="Willians"/>
+              <CardTeam name="Frontens"/>
+            </div>
           </div>
         </div>
-        <div className="menu-right">
-          <div className="menu-left-title">
-            <span>Users available</span>
-          </div>
-          <div className="container-users" style={{maxHeight: 270}}>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Ana" role="Front-end"/>
-            <CardUser name="Jéssica" role="Business"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardUser name="Luis" role="DevOps"/>
-            <CardMore/>
-          </div>
-          <div className="menu-left-title">
-            <span>Others teams</span>
-          </div>
-          <div className="container-teams" style={{maxHeight: 270}}>
-            <CardTeam name="Knife Party"/>
-            <CardTeam name="Souls"/>
-            <CardTeam name="Willians"/>
-            <CardTeam name="Frontens"/>
-            <CardTeam name="Knife Party"/>
-            <CardTeam name="Souls"/>
-            <CardTeam name="Willians"/>
-            <CardTeam name="Frontens"/>
-            <CardTeam name="Knife Party"/>
-            <CardTeam name="Souls"/>
-            <CardTeam name="Willians"/>
-            <CardTeam name="Frontens"/>
-          </div>
-        </div>
-      </div>
+        </>
+      }
     </div>
   )
 }

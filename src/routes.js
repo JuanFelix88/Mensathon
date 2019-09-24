@@ -5,12 +5,14 @@ import Login from './pages/login'
 import EventInfo from './pages/regulations'
 import Main from './pages/main'
 import User from './pages/user'
+import Register from './pages/register'
 // import FindPeople from './pages/findpeople'
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/login" exact={true} component={Login}/>
+      <Route path="/register" exact={true} component={Register}/>
       <Route path="/" exact={true} component={Login}/>
       <Route path="/regulations" exact={true} component={EventInfo}/>
       <Route path="/main" exact={true} component={Main}/>

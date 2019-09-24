@@ -2,7 +2,7 @@ import React, { useEffect, useState  } from 'react'
 import './style.css'
 import logo from '../../assets/logo.svg'
 import {Redirect} from 'react-router-dom'
-import { login } from '../../api'
+import { login, validateToken } from '../../api'
 
 const noReferenceURL = ("#")
 
@@ -18,14 +18,23 @@ export default (props) => {
 
   // on error auth
   const [tokenValid, setTokenvalid] = useState(false)
+
+  // validate token
+  async function validateSession () {
+    try {
+      const response = await validateToken()
+      if (response.status === 200) window.location.href = `/main`
+    } catch (error) {
+    }
+  }
   
   useEffect(() => {
     document.title = "Mensathon - Login"
-    if (localStorage.getItem('app_token') === 'hukjkhkopop57954ww23s') {
-      setTokenvalid(true)
-      // props.history.push
-      window.location.href = `/main`
-    }
+    validateSession()
+    // if (localStorage.getItem('app_token') === 'hukjkhkopop57954ww23s') {
+    // setTokenvalid(true)
+    // props.history.push
+    // window.location.href = `/main`
   }, [])
 
   function handleChangeEmail ({target}) {
