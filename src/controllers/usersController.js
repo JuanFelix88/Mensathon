@@ -8,7 +8,6 @@ router.use(middlewareToken);
 // authenticate user (login)
 router.get("/available", async (req, res) => {
   const { userId } = req.body;
-  // console.log(">> user id:", req.userId);
   const users = await User.find({ team: null, _id: { $ne: userId } })
     .limit(10)
     .select("-email")
@@ -24,6 +23,16 @@ router.get("/available", async (req, res) => {
         return doc;
       })
   });
+});
+
+// get user by nickname
+router.get("/user/:nick", async (req, res) => {
+  const { nick } = req.params
+  const user = await User.findOne({ nickName: nick})
+    .select("-email")
+    .select("-createdAt");
+
+  res.send({ user });
 });
 
 module.exports = app => app.use("/users", router);

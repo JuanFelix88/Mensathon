@@ -15,6 +15,7 @@ app.use(cors({ origin: process.env.APP_FRONT }));
 require("./controllers/authController")(app);
 require("./controllers/teamController")(app);
 require("./controllers/usersController")(app);
+require("./controllers/teamsController")(app);
 
 app.listen(3333);
 

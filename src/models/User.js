@@ -28,7 +28,8 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   team: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
     default: null
   },
   image: {
