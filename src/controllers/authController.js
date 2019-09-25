@@ -18,9 +18,9 @@ router.post("/register", async (req, res) => {
     // @ts-ignore
     user.password = undefined;
 
-    const token = generateToken(user.id, process.env.APP_HASH, 86400);
+    const token = generateToken(user.id, process.env.APP_HASH, "3h");
 
-    return res.send({ user, token });
+    return res.status(201).send({ user, token });
   } catch (error) {
     return res.status(400).send({ error: "Registration failed" });
   }
@@ -41,7 +41,7 @@ router.post("/authenticate", async (req, res) => {
   // @ts-ignore
   user.password = undefined;
 
-  const token = generateToken(user.id, process.env.APP_HASH, 86400);
+  const token = generateToken(user.id, process.env.APP_HASH, "3h");
 
   res.send({ user, token });
 });
