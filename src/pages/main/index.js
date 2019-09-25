@@ -5,7 +5,7 @@ import CardMore from './cardmore'
 import CardTeam from './cardteam'
 import Suggestion from './suggestion'
 import CardMSG from './cardmsg'
-import { validateToken, getAvailableUsers } from '../../api'
+import { validateToken, getAvailableUsers, getAvailableTeams } from '../../api'
 
 const searchsCommons = [
   "Connect Users",
@@ -30,10 +30,13 @@ export default () => {
   const [inputMsg, setInputMsg] = useState('')
 
   // scroll chat
-  const [scrollAmount, setScrollAmount] = useState(0)
+  // const [scrollAmount, setScrollAmount] = useState(0)
 
   // users available
   const [availableUsers, setAvailableUsers] = useState([])
+
+  // available teams
+  const [availableTeams, setAvailableTeams] = useState([])
 
   const [loadingPage, setLoadingPage] = useState(true)
 
@@ -108,9 +111,15 @@ export default () => {
     setAvailableUsers(data)
   }
 
+  async function handleGetAvailableTeams () {
+    const { teams } = await getAvailableTeams()
+    setAvailableTeams(teams)
+  }
+
   useEffect(() => {
     validateSession()
     handleGetAvailableUsers()
+    handleGetAvailableTeams()
     document.title = "Team - Mensathon"
   }, [])
 
@@ -150,7 +159,7 @@ export default () => {
               <div className="container-img">
                 <div className="img-circle-1">
                   <div className="img-circle">
-                    <img src="https://avatars2.githubusercontent.com/u/49664855?s=460&v=4"/>
+                    <img src={'https://avatars2.githubusercontent.com/u/49664855?s=460&v=4'} alt="avatar"/>
                   </div>
                 </div>
               </div>
@@ -204,28 +213,6 @@ export default () => {
                 ))
               }
               {/* <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Luis" role="DevOps"/>
-              <CardUser name="Ana" role="Front-end"/>
-              <CardUser name="Jéssica" role="Business"/>
-              <CardUser name="Luis" role="DevOps"/>
               <CardUser name="Luis" role="DevOps"/> */}
               <CardMore/>
             </div>
@@ -233,18 +220,11 @@ export default () => {
               <span>Others teams</span>
             </div>
             <div className="container-teams" style={{maxHeight: 270}}>
-              <CardTeam name="Knife Party"/>
-              <CardTeam name="Souls"/>
-              <CardTeam name="Willians"/>
-              <CardTeam name="Frontens"/>
-              <CardTeam name="Knife Party"/>
-              <CardTeam name="Souls"/>
-              <CardTeam name="Willians"/>
-              <CardTeam name="Frontens"/>
-              <CardTeam name="Knife Party"/>
-              <CardTeam name="Souls"/>
-              <CardTeam name="Willians"/>
-              <CardTeam name="Frontens"/>
+              {
+                availableTeams.map(({name}) => <CardTeam name={name}/>)
+              }
+              {/* <CardTeam name="Knife Party"/>
+              <CardTeam name="Frontens"/> */}
             </div>
           </div>
         </div>

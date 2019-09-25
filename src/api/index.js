@@ -1,5 +1,7 @@
 import api from 'axios'
 
+// api.defaults.headers.common = {'Authorization': `bearer ${getTokenSession()}`}
+
 function getTokenSession () {
   return `bearer ${localStorage.getItem('app_token')}`
 }
@@ -41,6 +43,18 @@ export async function validateToken () {
 export async function getAvailableUsers () {
   const response = await api.get(
     `${process.env.REACT_APP_URL_BACKEND}/users/available`, 
+    {
+      headers: {
+        'authorization': getTokenSession()
+      }
+    }
+  )
+  return response.data
+}
+
+export async function getAvailableTeams () {
+  const response = await api.get(
+    `${process.env.REACT_APP_URL_BACKEND}/teams/available`, 
     {
       headers: {
         'authorization': getTokenSession()

@@ -72,14 +72,14 @@ export default (props) => {
             <input value={email} onChange={handleChangeEmail} 
             className="form-control"
             placeholder="Enter email"
-            style={{borderRadius: 20, marginTop: 10}}
+            style={{borderRadius: 5, marginTop: 10}}
             />
           </div>
           <div className="form-group" style={{color: '#fff'}}>
             <input value={password} onChange={handleChangePassword} 
             type="password" 
             className="form-control"
-            style={{borderRadius: 20}}
+            style={{borderRadius: 5}}
             placeholder="Password"/>
           </div>
           <a className="link-forgoth-password" href={noReferenceURL}>Esqueci minha senha</a>
