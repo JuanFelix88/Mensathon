@@ -23,7 +23,7 @@ export default (props) => {
   async function validateSession () {
     try {
       const response = await validateToken()
-      if (response.status === 200) window.location.href = `/main`
+      if (response.status === 200) window.location.href = `/team`
     } catch (error) {
     }
   }
@@ -58,7 +58,7 @@ export default (props) => {
   return (
     loggedIn // conditional
     ? (
-      <Redirect to="main"/>
+      <Redirect to="team"/>
     ) : tokenValid 
         ? <div className="login-container"></div>
         : (
