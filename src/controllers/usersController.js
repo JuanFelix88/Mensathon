@@ -18,7 +18,7 @@ router.get("/available", async (req, res) => {
     const { userId } = req;
 
     let users = await User.find({ team: { $eq: null } })
-      .select("-__v -email -createdAt")
+      .select("-__v -email -createdAt -_id")
       .limit(50);
 
     users = users.filter(user => {
@@ -35,7 +35,7 @@ router.get("/available", async (req, res) => {
 router.get("/user/:nick", async (req, res) => {
   const { nick } = req.params;
   const user = await User.findOne({ nickName: nick }).select(
-    "-email -createdAt"
+    "-email -createdAt -_id -__v"
   );
 
   res.send({ user });

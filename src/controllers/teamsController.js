@@ -3,7 +3,6 @@ const router = express.Router();
 const middlewareToken = require("../middlewares/auth");
 const User = require("../models/User");
 const Team = require("../models/Team");
-const jwt = require("jsonwebtoken");
 
 router.use(middlewareToken);
 
@@ -19,11 +18,36 @@ router.get("/team/:nickName", async ({ params }, res) => {
       .select("-createdAt")
       .populate({
         path: "leader",
-        select: "-_id -email -createdAt -__v"
+        select: "-_id -email -createdAt -__v -team"
       })
       .populate({
         path: "participants",
-        select: "-_id -email -createdAt -__v"
+        select: "-_id -email -createdAt -__v -team"
+      });
+
+    res.send({ team });
+  } catch (error) {
+    res.status(404).send({ error: error });
+  }
+});
+
+// get info team
+// @ts-ignore
+router.get("/myteam", async (req, res) => {
+  try {
+    /**@type {import('../models').Team} */
+    // @ts-ignore
+    let team = await Team.findOne({ nickName: params.nickName })
+      .select("-_id")
+      .select("-__v")
+      .select("-createdAt")
+      .populate({
+        path: "leader",
+        select: "-_id -email -createdAt -__v -team"
+      })
+      .populate({
+        path: "participants",
+        select: "-_id -email -createdAt -__v -team"
       });
 
     res.send({ team });
@@ -43,7 +67,8 @@ router.post("/register", async (req, res) => {
     // @ts-ignore
     if (user.team !== null) throw "You are already registered in a team";
 
-    const team = await Team.create({ ...body, leader: userId });
+    const team = await Team.create({ ...body, leader: userId })
+    team._id = undefined;
     await User.findByIdAndUpdate(userId, { team: team._id });
 
     res.status(201).send({ team });
@@ -54,7 +79,7 @@ router.post("/register", async (req, res) => {
 
 // get info team
 // @ts-ignore
-router.get("/available", async (req, res) => {
+router.get("/available", async (_, res) => {
   try {
     /**@type {import('../models').Team[]} */
     // @ts-ignore
