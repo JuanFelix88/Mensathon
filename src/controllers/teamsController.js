@@ -35,9 +35,11 @@ router.get("/team/:nickName", async ({ params }, res) => {
 // @ts-ignore
 router.get("/myteam", async (req, res) => {
   try {
-    /**@type {import('../models').Team} */
     // @ts-ignore
-    let team = await Team.findOne({ nickName: params.nickName })
+    const { userId } = req;
+    const user = await User.findById(userId);
+    // @ts-ignore
+    const team = await Team.findById(user.team)
       .select("-_id")
       .select("-__v")
       .select("-createdAt")
@@ -67,7 +69,7 @@ router.post("/register", async (req, res) => {
     // @ts-ignore
     if (user.team !== null) throw "You are already registered in a team";
 
-    const team = await Team.create({ ...body, leader: userId })
+    const team = await Team.create({ ...body, leader: userId });
     team._id = undefined;
     await User.findByIdAndUpdate(userId, { team: team._id });
 
