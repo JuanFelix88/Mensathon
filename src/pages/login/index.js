@@ -9,9 +9,9 @@ const noReferenceURL = ("#")
 export default (props) => {
   // email input
   const [email, setEmail] = useState('')
-
   // password input
-  const [password, setPassword] = useState('')
+
+  const[password, setPassword] = useState('')
 
   // login state
   const [loggedIn, setLoggedIn ] = useState(false)

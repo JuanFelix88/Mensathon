@@ -63,3 +63,15 @@ export async function getAvailableTeams () {
   )
   return response.data
 }
+
+export async function getInfoMyTeam () {
+  const response = await api.get(
+    `${process.env.REACT_APP_URL_BACKEND}/teams/myteam`,
+    {
+      headers: {
+        'authorization': getTokenSession()
+      }
+    } 
+  )
+  return response.data
+}

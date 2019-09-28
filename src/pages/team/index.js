@@ -5,7 +5,7 @@ import CardMore from './cardmore'
 import CardTeam from './cardteam'
 import Suggestion from './suggestion'
 import CardMSG from './cardmsg'
-import { validateToken, getAvailableUsers, getAvailableTeams } from '../../api'
+import { validateToken, getAvailableUsers, getAvailableTeams, getInfoMyTeam } from '../../api'
 
 const searchsCommons = [
   "Connect Users",
@@ -20,6 +20,9 @@ export default () => {
   const [search, setSearch] = useState('')
   const [searchFocus, setSearchFocus] = useState(false)
   const [suggestions, setSuggestions] = useState([])
+
+  // teamInfo
+  const [teamInfo, setTeamInfo] = useState()
 
   // msgs
   const [msg, setMsg] = useState(
@@ -106,6 +109,14 @@ export default () => {
     }
   }
 
+  async function getDataTeam () {
+    try {
+      const response = await getInfoMyTeam()
+      setTeamInfo(response)
+    } catch (error) {
+    }
+  }
+
   async function handleGetAvailableUsers () {
     const { data } = await getAvailableUsers()
     setAvailableUsers(data)
@@ -120,6 +131,7 @@ export default () => {
     validateSession()
     handleGetAvailableUsers()
     handleGetAvailableTeams()
+    getDataTeam()
     document.title = "Team - Mensathon"
   }, [])
 
@@ -175,10 +187,13 @@ export default () => {
               <span>Team</span>
             </div>
             <div className="container-users">
-              <CardUser name="Jailson" role="Product Owner" leader={true}/>
-              <CardUser name="Victor" role="Front-end"/>
-              <CardUser name="Cosme" role="Front-end"/>
-              <CardUser name="Luis" role="DevOps"/>
+              {
+                // teamInfo.participants.map(participant => (
+                //   <CardUser name={participant.nickName} role={participant.job} />
+                // ))
+              }
+              {/* <CardUser name="Jailson" role="Product Owner" leader={true}/>
+              */}
             </div>
           </div>
           <div className="container-workspace">
